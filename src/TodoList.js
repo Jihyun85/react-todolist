@@ -97,10 +97,6 @@ class Todolist extends React.Component {
     localStorage.setItem("Todo", JSON.stringify(newList));
   };
 
-  finishList = (e) => {
-    const li = e.target.parentNode.parentNode;
-  };
-
   deleteList = (e) => {
     const { todoList, finishedList } = this.state;
     const li = e.target.parentNode.parentNode;
@@ -109,6 +105,18 @@ class Todolist extends React.Component {
       todoList: newTodoList,
     });
     this.saveLocalStorage(newTodoList);
+  };
+
+  moveToFinished = (e) => {
+    const { todoList, finishedList } = this.state;
+    const li = e.target.parentNode.parentNode;
+    const thisObj = todoList.find((obj) => obj.id === li.id);
+    const newList = finishedList.slice(0);
+    newList.push(thisObj);
+    this.deleteList(e);
+    this.setState({
+      finishedList: newList,
+    });
   };
 
   handleSubmit = (e) => {
@@ -169,7 +177,7 @@ class Todolist extends React.Component {
               <Item key={item.id} id={item.id}>
                 {item.todo}
                 <BtnBox>
-                  <ItemBtn type="button" onClick={this.finishList}>
+                  <ItemBtn type="button" onClick={this.moveToFinished}>
                     완료
                   </ItemBtn>
                   <ItemBtn type="button" onClick={this.deleteList}>
@@ -182,7 +190,17 @@ class Todolist extends React.Component {
         </ListBox>
         <ListBox>
           <Title>Finished!</Title>
-          <List></List>
+          <List>
+            {finishedList.map((obj) => (
+              <Item key={obj.id} id={obj.id}>
+                {obj.todo}
+                <BtnBox>
+                  <ItemBtn>취소</ItemBtn>
+                  <ItemBtn>삭제</ItemBtn>
+                </BtnBox>
+              </Item>
+            ))}
+          </List>
         </ListBox>
       </Container>
     );

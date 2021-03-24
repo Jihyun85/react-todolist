@@ -39,7 +39,6 @@ const Submit = styled.button`
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   font-size: 1.8rem;
-  cursor: pointer;
 `;
 
 const ListBox = styled.div`
@@ -85,6 +84,8 @@ class Todolist extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.saveLocalStorage = this.saveLocalStorage.bind(this);
+    this.loadList = this.loadList.bind(this);
+    this.deleteList = this.deleteList.bind(this);
     this.state = {
       value: "",
       todoList: [],
@@ -96,12 +97,30 @@ class Todolist extends React.Component {
     localStorage.setItem("Todo", JSON.stringify(newList));
   };
 
+  finishList = (e) => {
+    const li = e.target.parentNode.parentNode;
+  };
+
+  deleteList = (e) => {
+    const { todoList, finishedList } = this.state;
+    const li = e.target.parentNode.parentNode;
+    const newTodoList = todoList.slice(0).filter((obj) => obj.id !== li.id);
+    this.setState({
+      todoList: newTodoList,
+    });
+    this.saveLocalStorage(newTodoList);
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const { value, todoList } = this.state;
     if (value !== "") {
       const newList = todoList.slice(0);
-      newList.push(value);
+      const obj = {
+        id: ids.generate(),
+        todo: value,
+      };
+      newList.push(obj);
       this.setState({
         value: "",
         todoList: newList,
@@ -116,6 +135,19 @@ class Todolist extends React.Component {
       value,
     });
   };
+
+  loadList = () => {
+    const loadedList = JSON.parse(localStorage.getItem("Todo"));
+    if (loadedList) {
+      this.setState({
+        todoList: loadedList,
+      });
+    }
+  };
+
+  componentDidMount() {
+    this.loadList();
+  }
 
   render() {
     const { value, todoList, finishedList } = this.state;
@@ -134,11 +166,15 @@ class Todolist extends React.Component {
           <Title>To do List</Title>
           <List>
             {todoList.map((item) => (
-              <Item key={ids.generate()}>
-                {item}{" "}
+              <Item key={item.id} id={item.id}>
+                {item.todo}
                 <BtnBox>
-                  <ItemBtn type="button">완료</ItemBtn>
-                  <ItemBtn type="button">삭제</ItemBtn>
+                  <ItemBtn type="button" onClick={this.finishList}>
+                    완료
+                  </ItemBtn>
+                  <ItemBtn type="button" onClick={this.deleteList}>
+                    삭제
+                  </ItemBtn>
                 </BtnBox>
               </Item>
             ))}

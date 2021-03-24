@@ -2,8 +2,10 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'PFStardust';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+    font-family: 'MapoFlowerIsland';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
   }
   * {
     margin: 0;
@@ -14,21 +16,42 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
   body {
+    width: 100vw;
+    height: 100vh;
     padding: 2rem;
-    font-family: "PFStardust";
+    background-color: #f4eded;
+    font-family: "MapoFlowerIsland";
     font-size: 1.4rem;
+    font-weight: 600;
   }
   input {
     appearance: none;
     border: none;
     background-color: transparent;
-    font-family: "PFStardust";
+    font-size: 1.6rem;
+    font-family: "MapoFlowerIsland";
     outline: none;
   }
   input[type="text"] {
     &::placeholder {
-      font-family: "PFStardust"
+      font-family: "MapoFlowerIsland"
     }
+  }
+  button {
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-family: "MapoFlowerIsland";
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+    background-color: #eb2f06;
+    }
+    &:focus-within {
+      background-color: #eb2f06;
+  }
+
   }
   li {
     list-style: none;

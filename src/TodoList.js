@@ -12,39 +12,34 @@ const Form = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 const Input = styled.input`
   width: 40vw;
   min-width: 20rem;
-  height: 4rem;
+  height: 5rem;
   padding: 0.5rem 1.5rem;
-  border: 0.2rem solid #38ada9;
+  border: 0.2rem solid #ff7979;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+  font-size: 2rem;
   outline: none;
   &:focus {
     border-color: #eb2f06;
   }
 `;
 
-const Submit = styled.input`
+const Submit = styled.button`
   width: 10vw;
   min-width: 10rem;
-  height: 4rem;
+  height: 5rem;
   box-sizing: border-box;
-  color: white;
-  background-color: #38ada9;
+  background-color: #ff7979;
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
-  font-weight: 400;
+  font-size: 1.8rem;
   cursor: pointer;
-  &:hover {
-    background-color: #eb2f06;
-  }
-  &:focus-within {
-    background-color: #eb2f06;
-  }
 `;
 
 const ListBox = styled.div`
@@ -52,11 +47,37 @@ const ListBox = styled.div`
   min-width: 30rem;
 `;
 
-const Title = styled.h3``;
+const Title = styled.h3`
+  height: 3rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+`;
 
-const List = styled.ul``;
+const List = styled.ul`
+  padding: 0 2rem;
+`;
 
-const Item = styled.li``;
+const Item = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ItemBtn = styled.button`
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 0.5rem;
+  background-color: #ff7979;
+`;
 
 class Todolist extends React.Component {
   constructor(props) {
@@ -107,13 +128,19 @@ class Todolist extends React.Component {
             onChange={this.handleChange}
             value={value}
           />
-          <Submit type="submit" value="제출" />
+          <Submit type="submit">제출</Submit>
         </Form>
         <ListBox>
           <Title>To do List</Title>
           <List>
             {todoList.map((item) => (
-              <Item key={ids.generate()}>{item}</Item>
+              <Item key={ids.generate()}>
+                {item}{" "}
+                <BtnBox>
+                  <ItemBtn type="button">완료</ItemBtn>
+                  <ItemBtn type="button">삭제</ItemBtn>
+                </BtnBox>
+              </Item>
             ))}
           </List>
         </ListBox>

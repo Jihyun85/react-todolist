@@ -1,5 +1,7 @@
+import Todolist from "./TodoList";
+
 function App() {
-  return <div className="App"></div>;
+  return <Todolist />;
 }
 
 export default App;

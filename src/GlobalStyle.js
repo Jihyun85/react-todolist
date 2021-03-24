@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
   body {
+    padding: 2rem;
     font-family: "PFStardust";
     font-size: 1.4rem;
   }
@@ -21,7 +22,8 @@ const GlobalStyle = createGlobalStyle`
     appearance: none;
     border: none;
     background-color: transparent;
-    font-family: "PFStardust"
+    font-family: "PFStardust";
+    outline: none;
   }
   input[type="text"] {
     &::placeholder {

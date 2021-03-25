@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import ids from "short-id";
 
+const LS_TODO = "Todo";
+const LS_FINISHED = "Finished";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -85,7 +88,9 @@ class Todolist extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.saveLocalStorage = this.saveLocalStorage.bind(this);
     this.loadList = this.loadList.bind(this);
-    this.deleteList = this.deleteList.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
+    this.deleteFinished = this.deleteFinished.bind(this);
+    this.moveToFinished = this.moveToFinished.bind(this);
     this.state = {
       value: "",
       todoList: [],
@@ -93,18 +98,8 @@ class Todolist extends React.Component {
     };
   }
 
-  saveLocalStorage = (newList) => {
-    localStorage.setItem("Todo", JSON.stringify(newList));
-  };
-
-  deleteList = (e) => {
-    const { todoList, finishedList } = this.state;
-    const li = e.target.parentNode.parentNode;
-    const newTodoList = todoList.slice(0).filter((obj) => obj.id !== li.id);
-    this.setState({
-      todoList: newTodoList,
-    });
-    this.saveLocalStorage(newTodoList);
+  saveLocalStorage = (newList, storageName) => {
+    localStorage.setItem(storageName, JSON.stringify(newList));
   };
 
   moveToFinished = (e) => {
@@ -113,10 +108,31 @@ class Todolist extends React.Component {
     const thisObj = todoList.find((obj) => obj.id === li.id);
     const newList = finishedList.slice(0);
     newList.push(thisObj);
-    this.deleteList(e);
+    this.deleteTodo(e);
     this.setState({
       finishedList: newList,
     });
+    this.saveLocalStorage(newList, LS_FINISHED);
+  };
+
+  deleteTodo = (e) => {
+    const { todoList } = this.state;
+    const li = e.target.parentNode.parentNode;
+    const newTodoList = todoList.slice(0).filter((obj) => obj.id !== li.id);
+    this.setState({
+      todoList: newTodoList,
+    });
+    this.saveLocalStorage(newTodoList, LS_TODO);
+  };
+
+  deleteFinished = (e) => {
+    const { finishedList } = this.state;
+    const li = e.target.parentNode.parentNode;
+    const newFinished = finishedList.slice(0).filter((obj) => obj.id !== li.id);
+    this.setState({
+      finishedList: newFinished,
+    });
+    this.saveLocalStorage(newFinished, LS_FINISHED);
   };
 
   handleSubmit = (e) => {
@@ -133,7 +149,7 @@ class Todolist extends React.Component {
         value: "",
         todoList: newList,
       });
-      this.saveLocalStorage(newList);
+      this.saveLocalStorage(newList, LS_TODO);
     }
   };
 
@@ -145,10 +161,16 @@ class Todolist extends React.Component {
   };
 
   loadList = () => {
-    const loadedList = JSON.parse(localStorage.getItem("Todo"));
-    if (loadedList) {
+    const loadedTodo = JSON.parse(localStorage.getItem("Todo"));
+    const loadedFinished = JSON.parse(localStorage.getItem("Finished"));
+    if (loadedTodo) {
       this.setState({
-        todoList: loadedList,
+        todoList: loadedTodo,
+      });
+    }
+    if (loadedFinished) {
+      this.setState({
+        finishedList: loadedFinished,
       });
     }
   };
@@ -180,7 +202,7 @@ class Todolist extends React.Component {
                   <ItemBtn type="button" onClick={this.moveToFinished}>
                     완료
                   </ItemBtn>
-                  <ItemBtn type="button" onClick={this.deleteList}>
+                  <ItemBtn type="button" onClick={this.deleteTodo}>
                     삭제
                   </ItemBtn>
                 </BtnBox>
@@ -196,7 +218,9 @@ class Todolist extends React.Component {
                 {obj.todo}
                 <BtnBox>
                   <ItemBtn>취소</ItemBtn>
-                  <ItemBtn>삭제</ItemBtn>
+                  <ItemBtn type="button" onClick={this.deleteFinished}>
+                    삭제
+                  </ItemBtn>
                 </BtnBox>
               </Item>
             ))}

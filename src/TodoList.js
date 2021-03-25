@@ -91,6 +91,7 @@ class Todolist extends React.Component {
     this.deleteTodo = this.deleteTodo.bind(this);
     this.deleteFinished = this.deleteFinished.bind(this);
     this.moveToFinished = this.moveToFinished.bind(this);
+    this.moveToTodo = this.moveToTodo.bind(this);
     this.state = {
       value: "",
       todoList: [],
@@ -113,6 +114,19 @@ class Todolist extends React.Component {
       finishedList: newList,
     });
     this.saveLocalStorage(newList, LS_FINISHED);
+  };
+
+  moveToTodo = (e) => {
+    const { todoList, finishedList } = this.state;
+    const li = e.target.parentNode.parentNode;
+    const thisObj = finishedList.find((obj) => obj.id === li.id);
+    const newList = todoList.slice(0);
+    newList.push(thisObj);
+    this.deleteFinished(e);
+    this.setState({
+      todoList: newList,
+    });
+    this.saveLocalStorage(newList, LS_TODO);
   };
 
   deleteTodo = (e) => {
@@ -217,7 +231,9 @@ class Todolist extends React.Component {
               <Item key={obj.id} id={obj.id}>
                 {obj.todo}
                 <BtnBox>
-                  <ItemBtn>취소</ItemBtn>
+                  <ItemBtn type="button" onClick={this.moveToTodo}>
+                    취소
+                  </ItemBtn>
                   <ItemBtn type="button" onClick={this.deleteFinished}>
                     삭제
                   </ItemBtn>

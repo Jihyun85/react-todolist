@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/jihyun85.github.io/react-todolist/static/js/main.36a6fd34.chunk.js",
+    "main.js.map": "/jihyun85.github.io/react-todolist/static/js/main.36a6fd34.chunk.js.map",
+    "runtime-main.js": "/jihyun85.github.io/react-todolist/static/js/runtime-main.50e09303.js",
+    "runtime-main.js.map": "/jihyun85.github.io/react-todolist/static/js/runtime-main.50e09303.js.map",
+    "static/js/2.078ce81c.chunk.js": "/jihyun85.github.io/react-todolist/static/js/2.078ce81c.chunk.js",
+    "static/js/2.078ce81c.chunk.js.map": "/jihyun85.github.io/react-todolist/static/js/2.078ce81c.chunk.js.map",
+    "index.html": "/jihyun85.github.io/react-todolist/index.html",
+    "static/js/2.078ce81c.chunk.js.LICENSE.txt": "/jihyun85.github.io/react-todolist/static/js/2.078ce81c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.50e09303.js",
+    "static/js/2.078ce81c.chunk.js",
+    "static/js/main.36a6fd34.chunk.js"
+  ]
+}

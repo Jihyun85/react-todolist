@@ -4,7 +4,7 @@ import GlobalStyle from "./GlobalStyle";
 function App() {
   return (
     <>
-      <Todolist />;
+      <Todolist />
       <GlobalStyle />
     </>
   );
